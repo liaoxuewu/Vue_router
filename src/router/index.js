@@ -1,24 +1,45 @@
 //路由器模块
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import about from '../components/about.vue';
-import home from '../components/home.vue';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import about from '../components/about.vue'
+import home from '../components/home.vue'
+import news from '../components/news.vue'
+import message from '../components/message.vue'
+import messageDetail from '../components/messageDetail.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 export default new VueRouter({
-  routes:[
+  linkActiveClass: 'active', // 指定选中的路由链接的class
+  mode: 'history',  // 路由路径不带#
+  routes: [
     {
-      path:'/about',
-      components:about
+      path: '/about',
+      component: about
     },
     {
-      path:'/home',
-      components:home
+      path: '/home',
+      component: home,
+      children: [
+        {
+          path: 'news',
+          component: news
+        },
+        {
+          path: 'message',
+          component: message,
+          children: [
+            {
+              path: 'detail/:id',
+              component: messageDetail
+            }
+          ]
+        }
+      ]
     },
     {
       path:'/',
-      redirect:about
+      redirect:'/about'
     }
   ]
 });
